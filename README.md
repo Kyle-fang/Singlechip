@@ -167,7 +167,7 @@ void main(){
 	}
 	```
       - 方法2：
-      ```
+```
 #include<reg52.h>
 #define uint unsigned int //宏定义
 sbit led1=P0^0;
