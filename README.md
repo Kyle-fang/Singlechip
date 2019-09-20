@@ -143,10 +143,32 @@ void main(){
    - 循环左移和右移函数,包含在instrins.h库函数里边：
       - _crol_(a, b); 循环左移函数，a是左移的值，b是左移的位数
       - _cror_(a, b); 循环右移函数，a是右移的值，b是右移的位数
-   -实现代码
-   	- 方法1：
-   ```
-   #include<reg52.h>
+   - 实现代码
+      - 方法1：
+      ```
+	#include<reg52.h>
+	#define uint unsigned int
+	#define A P0
+
+	void delay(uint i){
+		while(i--);
+	}
+
+	void main(){
+		uint i;
+		A=0x01; //是最低位的发光二极管亮
+		delay(50000);
+		while(1){
+			for(i=0;i<8;i++){
+				A=(0x01<<i);
+				delay(50000);
+			}
+		}
+	}
+	```
+      - 方法2：
+      ```
+#include<reg52.h>
 #define uint unsigned int //宏定义
 sbit led1=P0^0;
 sbit led2=P0^1;
@@ -187,16 +209,12 @@ void main()
 		delayms(500);
 		led8=0;
 	}
-}
-//延时函数
-void delayms(uint xms)
-{
-	uint i,j;
-	for(i=xms;i>0;i--)
-		for(j=110;j>0;j--);
-}
-   ```
-   - 方法2：
-   ```
-   
+	}
+	//延时函数
+	void delayms(uint xms)
+	{
+		uint i,j;
+		for(i=xms;i>0;i--)
+			for(j=110;j>0;j--);
+	}
    ```
