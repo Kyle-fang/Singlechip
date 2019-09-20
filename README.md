@@ -220,3 +220,21 @@ void main()
    ```
 ## 蜂鸣器
    - 
+   ```
+   	#include<reg52.h>
+	#define uint unsigned int
+
+	sbit beep=P1^5;
+	//延时函数
+	void delay(uint i){
+		while(i--);
+	}
+	void main(){
+		while(1){
+			beep=1;
+			delay(1000);  //延时时间越短输出的音频信号频率越高，音调越高
+			beep=0;
+			delay(1000);
+		}	
+	}
+   ```
