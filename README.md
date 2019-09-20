@@ -139,3 +139,59 @@ void main(){
 }
 ```
 ## LED流水灯
+   - C语言常用预处理命令 **宏定义#define使用：#define 新名称  原内容（不加分号）**//对同一个内容，宏定义只能定义一次
+   - 循环左移和右移函数,包含在instrins.h库函数里边：
+      - 1. _crol_(a, b);
+   
+   	- 方法1：
+   ```
+   #include<reg52.h>
+#define uint unsigned int //宏定义
+sbit led1=P0^0;
+sbit led2=P0^1;
+sbit led3=P0^2;
+sbit led4=P0^3;
+sbit led5=P0^4;
+sbit led6=P0^5;
+sbit led7=P0^6;
+sbit led8=P0^7;
+//声明延时函数
+void delayms(uint);
+void main()
+{
+	while(1)
+	{
+		led1=1;
+		delayms(500);
+		led1=0;
+		led2=1;
+		delayms(500);
+		led2=0;
+		led3=1;
+		delayms(500);
+		led3=0;
+		led4=1;
+		delayms(500);
+		led4=0;
+		led5=1;
+		delayms(500);
+		led5=0;
+		led6=1;
+		delayms(500);
+		led6=0;
+		led7=1;
+		delayms(500);
+		led7=0;
+		led8=1;
+		delayms(500);
+		led8=0;
+	}
+}
+//延时函数
+void delayms(uint xms)
+{
+	uint i,j;
+	for(i=xms;i>0;i--)
+		for(j=110;j>0;j--);
+}
+   ```
