@@ -249,10 +249,10 @@ void main()
      #define uint unsigned int
      sbit relay=P1^4;
      void main(){
-	relay=0;  //
-	while(1)
-	{	
-	}
+	  relay=0;  //
+	  while(1)
+	  {	
+	  }
      }
   ```
 
