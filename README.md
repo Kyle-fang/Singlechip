@@ -247,7 +247,6 @@ void main()
    - ```
      #include<reg52.h>
      #define uint unsigned int
-
      sbit relay=P1^4;
      void main(){
 	relay=0;  //
@@ -256,7 +255,7 @@ void main()
 		
 	}
      }
-     ```
+  ```
 
-
+## 静态数码管
 
