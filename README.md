@@ -140,15 +140,19 @@ void main(){
 ```
 ## 延时函数
 ```
-	void delayms(){
-		
+	#define uint unsigned int
+	void delayms(uint xms){
+		uint i, j;
+		for(i=xms;i>0;i--)		//延时xms毫秒（ms）
+			for(j=110;j>0;j--);
 	}
 ```
+## 
 ## LED流水灯
    - C语言常用预处理命令 **宏定义#define使用：#define 新名称  原内容（不加分号）**//对同一个内容，宏定义只能定义一次
    - 循环左移和右移函数,包含在instrins.h库函数里边：
-      - _crol_(a, b); 循环左移函数，a是左移的值，b是左移的位数
-      - _cror_(a, b); 循环右移函数，a是右移的值，b是右移的位数
+      - _crol_(a, b); 循环左移函数，a是要左移的值，b是左移的位数
+      - _cror_(a, b); 循环右移函数，a是要右移的值，b是右移的位数
    - 实现代码
       - 方法1：
       ```
@@ -263,4 +267,4 @@ void main()
   ```
 
 ## 静态数码管
-
+   - 
