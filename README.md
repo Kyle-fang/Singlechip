@@ -296,9 +296,10 @@ void main()
 		while(1);		  //程序停止到这里
   	}
       ```
-     - 共阳极：
+      - 共阳极：
+
       ```
-      #include <reg52.h>         //52系列单片机头文件
+      	#include <reg52.h>         //52系列单片机头文件
 	sbit dula = P2^5;		   //申明U1锁存器的锁存端
 	sbit wela = P2^6;		   //申明U2锁存器的锁存端
 	void main()			  //主函数
