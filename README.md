@@ -268,4 +268,4 @@ void main()
 
 ## 数码管
    - 一个数码管的引脚是10个，显示8字需要7小段，另外还有一个小数点，最后还有一个公共端，生产商为了封装统一，单位数码管都封装10个引脚，其中第3脚和第8脚是连接在一起的
-   ![原理图](http://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=%E6%95%B0%E7%A0%81%E7%AE%A1&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=904804419,1892714089&os=220630412,2915171698&simid=3397265267,176940090&pn=17&rn=1&di=117590&ln=1327&fr=&fmq=1569128244820_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&objurl=http%3A%2F%2Fgss0.baidu.com%2F-4o3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fwh%253D450%252C600%2Fsign%3D7f6d0b47b1119313c716f7b4500820e1%2Fb999a9014c086e0631bbface01087bf40ad1cb20.jpg&rpstart=0&rpnum=0&adpicid=0&force=undefined)
+   ![原理图](http://img4.imgtn.bdimg.com/it/u=904804419,1892714089&fm=26&gp=0.jpg)
