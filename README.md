@@ -314,6 +314,43 @@ void main()
 		while(1);		  //程序停止到这里
   	}				
       ```
+     - 可选择数码管哪位
+     ```
+     #include<reg52.h>
+     #define uint unsigned int 
+     #define uchar unsigned char
+     sbit dula=P2^6;
+     sbit wela=P2^7;
+     sbit HC138A = P2^0;
+     sbit HC138B = P2^1;
+     sbit HC138C = P2^2;
+     uchar num;
+     void delayms(uint xms){
+	uint i,j;
+	for(i=xms;i>0;i--)
+		for(j=110;j>0;j--);
+	}
+	uchar code table[]={
+	0x3f, 0x06, 0x5b, 0x4f,
+	0x66, 0x6d, 0x7d, 0x07,
+	0x7f, 0x6f, 0x77, 0x7c, 
+	0x39, 0x5e, 0x79, 0x71};
+	void main(){
+		wela=1;  	//打开U2锁存端
+		HC138A = 1;
+		HC138B = 0;
+		HC138C = 0;   //送入位选信号，低电平有效
+		wela=0;
+		while(1){
+			for(num=0;num<16;num++){	  //16个数循环显示
+				dula=1;		//打开U1锁存端
+				P0=table[num];
+				dula=0;
+				delayms(1500);
+			}
+		}
+	}
+     ```
      - 共阴极数码管编号：
      ![编码](biao.png)
 ### 数码管动态显示
