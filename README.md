@@ -398,5 +398,34 @@ void 函数名()interrupt 中断号 using 工作组
        ② 计算初值，并将初值写入TH0、TL0或TH1、TL1。
        ③ 中断方式时，则对IE赋值，开放中断。
        ④ 使TR0或TR1置位，启动定时器／计数器定时或计数。
+### 定时中断
+```
+#include<reg52.h>
+#define uchar unsigned char
+#define uint unsigned int 
+sbit led1=P0^0;
+uchar num;
 
+void main(){
+	TMOD=0x01;		//设置定时器0为工作方式1（M1M0为01）
+	TH0=(65536-45872)/256;	//装初值11.0592M晶振定时50ms数为45872
+	TL0=(65536-45872)%256;
+	EA=1;	 		//开总中断
+	ET0=1;			//开定时器0中断
+	TR0=1;			//启动定时器0
+	while(1);
+}
+
+void T0_time()interrupt 1{
+	TH0=(65536-45872)/256;	//重装初值
+	TL0=(65536-45872)%256;	
+	num++;					//num每加1次判断一次是否到20次
+	if(num==8){				//若到了20次，说明1秒时间到
+		num=0;				//将num清空
+		led1=~led1;			//让发光二极管状态取反
+	}
+}
+```
+# 键盘检测原理及应用
+## 独立键盘检测
 
