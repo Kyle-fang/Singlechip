@@ -571,6 +571,148 @@ void T0_time()interrupt 1{
          - 第二步，在第一步判断有键按下后， 延时10ms消除机械抖动，再次读取行值，如果此行线还处于低电平状态则进入下 一步，否则返回第一步重新判断。
          - 第三步，开始扫描按键位置，采用逐 行扫描，每间隔1ms的时间，分别拉低第一列，第二列，第三列，第四 列，无论拉低哪一列其他三列都为高电平，读取行值找到按键的位置，分别把行值和列值储存在寄存器里。
          - 第四步，从寄存器中找到行值和列 值并把其合并，得到按键值，对此按键值进行编码，按照从第一行第一个一直到第四行第四个逐行进行编码，编码值从“0000” 至“1111” ， 再进行译码，最后显示按键号码。数码管动态扫描原理。数码管动态扫描原理：数码管的 7 个段及小数点都是由 LED 块组成的，显示方式分为静 态显示和动态显示两种。数码管在静态显示方式时，其共阳管的位选 信号均为低电平，四个数码管的共用段选线 a、b、c、d、e、f、g、dp 分别与 CPLD 的 8 根 I/O 口线相连，显示数字时只要给相应的段选线送 低电平。数码管在动态显示方式时，在某一时刻只能有一个数码管被点亮显示数字，其余的处于非选通状态，位选码端口的信号改变时， 段选码端口的信号也要做相应的改变 ，每位显示字符停留显示的时间 一般为 1-5ms，利用人眼睛的视觉惯性，在数码管上就能看到相当稳定的数字显示。
+	 ![](415.jpg)
+	 - 代码：
+	 ```
+	 /*
+	实验板上电是数码管不显示， 顺序按下矩阵键盘后，在数码管上依次显示0~F
+*/
+#include<reg52.h>
+#define uint unsigned int 
+#define uchar unsigned char
+
+//三八译码器的端口定义
+sbit HC138A = P2^0;
+sbit HC138B = P2^1;
+sbit HC138C = P2^2;
+
+uchar code table[] = {
+		0x3f, 0x06, 0x5b, 0x4f,
+		0x66, 0x6d, 0x7d, 0x07,
+		0x7f, 0x6f, 0x77, 0x7c,
+		0x39, 0x5e, 0x79, 0x71	
+		};
+
+//延时函数
+void delayms(uint xms){
+	uint i, j;
+	for(i=xms;i>0;i--)
+		for(j=110;j>0;j--);
+}
+
+void display(uchar num){
+	P0 = table[num];
+ 	HC138A = 0;
+	HC138B = 0;
+	HC138C = 0;
+}
+
+void keyscan(){
+	uchar key, temp;
+	//扫描第一行
+	P1 = 0xfe;
+	temp = P1;
+	temp = temp&0xf0;
+	if(temp!=0xf0){
+		delayms(10);	//延时去抖操作
+		temp = P1;
+		temp = temp&0xf0;
+		if(temp!=0xf0){
+			temp = P1;
+			switch(temp){
+				case 0xee: key=0; break;
+				case 0xde: key=1; break;
+				case 0xbe: key=2; break;
+				case 0x7e: key=3; break;
+			}
+			//等待按键被释放
+			while(temp!=0xf0){
+				temp = P1;
+				temp = temp&0xf0;
+			}
+			display(key);
+		}
+	}
+	//扫描第二行
+	P1 = 0xfd;
+	temp = P1;
+	temp = temp&0xf0;
+	if(temp!=0xf0){
+		delayms(10);	//延时去抖操作
+		temp = P1;
+		temp = temp&0xf0;
+		if(temp!=0xf0){
+			temp = P1;
+			switch(temp){
+				case 0xed: key=4; break;
+				case 0xdd: key=5; break;
+				case 0xbd: key=6; break;
+				case 0x7d: key=7; break;
+			}
+			//等待按键被释放
+			while(temp!=0xf0){
+				temp = P1;
+				temp = temp&0xf0;
+			}
+			display(key);
+		}
+	}
+	//扫描第三行
+	P1 = 0xfb;
+	temp = P1;
+	temp = temp&0xf0;
+	if(temp!=0xf0){
+		delayms(10);	//延时去抖操作
+		temp = P1;
+		temp = temp&0xf0;
+		if(temp!=0xf0){
+			temp = P1;
+			switch(temp){
+				case 0xeb: key=8; break;
+				case 0xdb: key=9; break;
+				case 0xbb: key=10; break;
+				case 0x7b: key=11; break;
+			}
+			//等待按键被释放
+			while(temp!=0xf0){
+				temp = P1;
+				temp = temp&0xf0;
+			}
+			display(key);
+		}
+	}
+	//扫描第四行
+	P1 = 0xf7;
+	temp = P1;
+	temp = temp&0xf0;
+	if(temp!=0xf0){
+		delayms(10);	//延时去抖操作
+		temp = P1;
+		temp = temp&0xf0;
+		if(temp!=0xf0){
+			temp = P1;
+			switch(temp){
+				case 0xe7: key=12; break;
+				case 0xd7: key=13; break;
+				case 0xb7: key=14; break;
+				case 0x77: key=15; break;
+			}
+			//等待按键被释放
+			while(temp!=0xf0){
+				temp = P1;
+				temp = temp&0xf0;
+			}
+			display(key);
+		}
+	}
+}
+
+void main(){
+	P0 = 0;
+	while(1)
+		keyscan();	//不停的扫描键盘是否被按下
+}
+	 ```
 
 	
 
